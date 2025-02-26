@@ -64,9 +64,9 @@ The bot provides the following slash commands:
 ```
 🔹 Updates the interval (seconds) between messages.
 
----
-
-- Defines Discord slash commands.
-- Manages bot startup and command synchronization.
-
+### **AutoTyper Help**
+```
+/help
+```
+🔹 Shows AutoTyper help interface.
 
