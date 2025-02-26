@@ -1,16 +1,16 @@
 import asyncio
 
 class AutoTyper:
-    def __init__(self, bot, interval=0.5, default_message="Hello! This is an Automated Message. 🚀"):
+    def __init__(self, bot, interval=5, default_message="Hello! This is an Automated Message. 🚀"):
         """
         Initializes the AutoTyper class to support multiple guilds.
         """
         self.bot = bot
-        self.interval = interval
+        self.default_interval = interval
         self.default_message = default_message
         self.tasks = {}  # Dictionary to store tasks for each guild {guild_id: task}
         self.messages = {}  # Store custom messages for each guild {guild_id: message}
-        self.interval = {} # Stores intervals per guild
+        self.intervals = {}  # Stores intervals per guild {guild_id: interval}
 
     async def _sendMessages(self, guild_id, channel_id):
         """
@@ -31,7 +31,9 @@ class AutoTyper:
             except Exception as e:
                 print(f"Error sending message in Guild {guild_id}: {e}")
 
-            await asyncio.sleep(self.interval)
+            # Use the guild-specific interval or default if not set
+            interval = self.intervals.get(guild_id, self.default_interval)
+            await asyncio.sleep(interval)
 
     def start(self, guild_id, channel_id):
         """
@@ -59,29 +61,19 @@ class AutoTyper:
         self.messages[guild_id] = new_message
         print(f"AutoTyper message updated in Guild {guild_id}: {new_message}")
 
-    def setInterval(self,guild_id,new_interval):
+    def setInterval(self, guild_id, new_interval):
         """
         Changes the interval of the bot sending message periodically.
         Interval must be in seconds.
-        :param new_interval:
-        :param guild_id:
+        :param new_interval: New interval in seconds
+        :param guild_id: ID of the guild to update
+        :return: None
+        """
+        self.intervals[guild_id] = new_interval
+        print(f"AutoTyper interval updated to {new_interval} seconds in Guild {guild_id}.")
+
+    def showHelp(self):
+        """
+        Shows the help menu.
         :return:
         """
-        if guild_id in self.tasks:
-            self.interval[guild_id] = new_interval
-            print(f"AutoTyper interval updated to {new_interval} seconds in Guild {guild_id}.")
-        else:
-            print(f"AutoTyper is not running in Guild {guild_id}.")
-
-
-
-
-
-
-
-
-
-
-
-
-

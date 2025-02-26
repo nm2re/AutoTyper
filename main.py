@@ -10,7 +10,7 @@ CHANNEL_ID = Secrets.TEST_SERVER_CHANNEL_ID
 GUILD_ID = Secrets.SERVER_ID
 
 # Class instance
-auto_typer = AutoTyper(bot, interval=3) # 1s interval
+auto_typer = AutoTyper(bot)
 
 @bot.event
 async def on_ready():
@@ -34,10 +34,28 @@ async def set_message(ctx, new_message: discord.Option(str, description="The new
     auto_typer.setMessage(ctx.guild.id, new_message)
     await ctx.respond(f"AutoTyper message updated to: `{new_message}`")
 
-@bot.slash_command(name="set_interval", description="Set the message interval for the bot")
+@bot.slash_command(guild_ids=[GUILD_ID], name="set_interval", description="Set the message interval for the bot")
 async def set_interval(ctx, new_interval: discord.Option(float, description="New interval in seconds")):
     auto_typer.setInterval(ctx.guild.id, new_interval)
     await ctx.respond(f"AutoTyper interval updated to {new_interval} seconds.")
+
+@bot.slash_command(guild_ids=[GUILD_ID], name="help", description="Provides help menu")
+async def help_menu(ctx):
+    embed = discord.Embed(
+        title="🤖 AutoTyper Help Menu",
+        description="Here are the available commands for AutoTyper:",
+        color=discord.Color.blue()
+    )
+
+    embed.add_field(name="/start_bot", value="Starts the AutoTyper in the current channel.", inline=False)
+    embed.add_field(name="/stop_bot", value="Stops the AutoTyper in the current channel.", inline=False)
+    embed.add_field(name="/set_message <message>", value="Sets a new message for AutoTyper.", inline=False)
+    embed.add_field(name="/set_interval <seconds>", value="Sets the interval for AutoTyper in seconds.", inline=False)
+    embed.add_field(name="/help", value="Displays this help menu.", inline=False)
+
+
+    await ctx.respond(embed=embed)
+
 
 
 if __name__ == "__main__":
