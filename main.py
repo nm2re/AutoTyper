@@ -7,7 +7,7 @@ bot = discord.Bot(intents=intents)
 
 
 CHANNEL_ID = Secrets.TEST_SERVER_CHANNEL_ID
-GUILD_ID = Secrets.NAIVETE_SERVER_ID
+GUILD_ID = Secrets.SERVER_ID
 
 # Class instance
 auto_typer = AutoTyper(bot, interval=3) # 1s interval
