@@ -1,6 +1,7 @@
 # Discord AutoTyper Bot
 
-A **Discord AutoTyper Bot** that sends automated messages periodically in a specified channel. This bot is designed to work on multiple servers, allowing each guild to customize its own message interval and content.
+ A **Discord AutoTyper Bot** that sends automated messages periodically in a specified channel. This bot is designed to work on multiple servers, allowing each guild to customize its own message interval and content.
+
 
 ## Features
 -  **Automated Typing**: Sends messages periodically in a specified channel.
